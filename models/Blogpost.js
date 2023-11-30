@@ -9,7 +9,8 @@ BlogPost.init (
         id: {
             type: DataTypes.INTEGER ,
             allowNull: false,
-            autoIncrement: true
+            autoIncrement: true,
+            primaryKey: true
         },
         title: {
             type: DataTypes.STRING,
@@ -20,17 +21,25 @@ BlogPost.init (
             allowNull: false,
         },
         writer: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'User',
+                model: 'user',
                 key: 'id'
             }
         },
         date: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: DataTypes.NOW
         }
+    },
+    {
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'blogpost'
     }
 );
 
