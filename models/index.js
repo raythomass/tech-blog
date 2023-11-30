@@ -14,3 +14,4 @@ Comment.belongsTo(BlogPost)
 
 Comment.belongsTo(User)
 
+module.exports = { BlogPost, Comment, User};
