@@ -9,7 +9,8 @@ Comment.init (
         id: {
             type: DataTypes.INTEGER ,
             allowNull: false,
-            autoIncrement: true
+            autoIncrement: true,
+            primaryKey: true
         },
         comment_title: {
             type: DataTypes.STRING,
@@ -20,25 +21,33 @@ Comment.init (
             allowNull: false,
         },
         comment_writer: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'User',
+                model: 'user',
                 key: 'id'
             }
         },
         comment_date: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DATE,
             allowNull: false,
+            defaultValue: DataTypes.NOW
         },
         comment_post: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model:'BlogPost',
+                model:'blogpost',
                 key: 'id'
             }
         }
+    },
+    {
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'comment'
     }
 );
 
