@@ -1,84 +1,57 @@
 const { BlogPost, Comment, User } = require('../../models');
 const router = require('express').Router();
 
-router.get('/', (req,res) => {
+// router.get('/', (req,res) => {
+//     try {
+//         const allPosts = BlogPost.findAll(
+//             {
+//                 attributes: ['id', 'title', 'content', 'writer', 'date'],
+//                 include: [
+//                     {
+//                         model: User,
+//                         attributes: 'username'
+//                     }, 
+//                     {
+//                         model: Comment,
+//                         attributes: ['id', 'comment_title', 'comment_content', 'comment_writer', 'commment_date'],
+//                         include: {
+//                             attributes: 'username'
+//                         }
+//                     }
+//                 ]
+//             })
+//             res.status(200).json(allPosts)
+//     } 
+//     catch(err) {
+//         res.status(500).json(err);
+//         console.log(err);
+//     }
+// });
+
+router.get('/', async (req, res) => {
     try {
-        const allPosts = BlogPost.findAll(
-            {
-                attributes: ['id', 'title', 'content', 'writer', 'date'],
-                include: [
-                    {
-                        model: User,
-                        attributes: 'username'
-                    }, 
-                    {
-                        model: Comment,
-                        attributes: ['id', 'comment_title', 'comment_content', 'comment_writer', 'commment_date'],
-                        include: {
-                            attributes: 'username'
-                        }
-                    }
-                ]
-            })
-            res.status(200).json(allPosts)
+      const blogPosts = await BlogPost.findAll();
+  
+      res.render('/', { blogPosts });
     } 
-    catch(err) {
-        res.status(500).json(err);
-        console.log(err);
+    catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Failure' });
     }
-});
+  });
 
-router.get('/:id', (req,res) => {
+  router.get('/:id', async (req, res) => {
     try {
-        const somePosts = BlogPost.findOne(
-            {
-                where: {
-                    id: req.params.id
-                },
-                attributes: ['id', 'title', 'content', 'writer', 'date'],
-                include: [
-                    {
-                        model: User,
-                        attributes: 'username'
-                    },
-                    {
-                        model: Comment,
-                        attributes: ['id', 'comment_title', 'comment_content', 'comment_writer', 'comment_date']
-                    }
-                ]
-            }
-        )
-        res.status(200).json(somePosts);
-    }
-    catch(err) {
-        res.status(500).json(err);
-        console.log(err);
-    }
-});
+      const { id } = req.params;
+  
+      const blogPost = await BlogPost.findByPk(id);
 
-router.post('/', (req,res) => {
-    try {
-        
+      res.render('/:id', { blogPost });
+    } 
+    catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failure' });
     }
-    catch {
+  });
 
-    }
-});
-
-router.post('/:id', (req,res) => {
-    try {
-
-    }
-    catch {
-
-    }
-});
-
-router.delete('/:id', (req,res) => {
-    try {
-
-    }
-    catch {
-
-    }
-});
+module.exports = router;

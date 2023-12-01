@@ -38,29 +38,4 @@ router.get('/:id', (req,res) => {
     }
 });
 
-router.post('/', (req,res) => {
-    try {
-
-    }
-    catch {
-
-    }
-});
-
-router.post('/:id', (req,res) => {
-    try {
-
-    }
-    catch {
-
-    }
-});
-
-router.delete('/:id', (req,res) => {
-    try {
-
-    }
-    catch {
-
-    }
-});
+module.exports = router;
