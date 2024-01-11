@@ -28,17 +28,28 @@ const router = require('express').Router();
 //     }
 // });
 
-router.get('/', async (req, res) => {
-    try {
-      const blogPosts = await BlogPost.findAll();
+// router.get('/', async (req, res) => {
+//     try {
+//       const blogPosts = await BlogPost.findAll();
   
-      res.render('/', { blogPosts });
-    } 
-    catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Failure' });
-    }
-  });
+//       res.render('/', { blogPosts });
+//     } 
+//     catch (err) {
+//       console.error(err);
+//       res.status(500).json({ message: 'Failure' });
+//     }
+//   });
+
+router.get('/', async (req,res) => {
+  try {
+      const allPosts = await BlogPost.findAll({})
+      res.status(200).json(allPosts)
+  }
+  catch(err) {
+      console.log(err)
+      res.status(500).json(err)
+  }
+});
 
   router.get('/:id', async (req, res) => {
     try {

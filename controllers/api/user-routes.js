@@ -1,17 +1,14 @@
 const { BlogPost, Comment, User } = require('../../models');
+const { create } = require('../../models/BlogPost');
 const router = require('express').Router();
 
 router.get('/', (req,res) => {
     try {
-        const allUsers = User.findAll(
-            {
-                attributes: { exclude: 'password' }
-            }
-        )
+        const allUsers = User.findAll({})
         res.status(200).json(allUsers);
     }
     catch(err) {
-        res.status(500).json(err);
+        res.status(404).json(err);
     }
 });
 
@@ -37,5 +34,18 @@ router.get('/:id', (req,res) => {
         res.status(500).json(err)
     }
 });
+
+router.post('/',(req, res) => {
+    try {
+        const createUser = User.create({
+            username: req.body.username,
+            password: req.body.password
+        });
+        res.status(200).json(createUser);
+    }
+    catch(err) {
+        res.status(500).json(err)
+    }
+})
 
 module.exports = router;

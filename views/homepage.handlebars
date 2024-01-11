@@ -1,6 +1,13 @@
 <h1>Homepage</h1>
 {{#each blogposts as |blogpost|}}
-<div>
-    <p>Story: {{blogpost.title}}</p>
+
+<div class="card">
+    <section>
+        <h3 class="rtitle">{{blogpost.title}}</h3>
+    </section>
+    <section>
+        <p class="rcontent">{{blogpost.content}}</p>
+    </section>
 </div>
+
 {{/each}}
